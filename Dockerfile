@@ -12,10 +12,15 @@ RUN apt-get update && apt-get install -y \
     git \
     zip \
     unzip \
-    && docker-php-ext-install pdo_mysql
+    libzip-dev \
+    && docker-php-ext-install pdo_mysql zip
 
 # Install Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
+# Set up Composer environment variables
+ENV COMPOSER_MEMORY_LIMIT=-1 \
+    COMPOSER_ALLOW_SUPERUSER=1
 
 # Install project dependencies
 RUN composer install --no-interaction --no-plugins --no-scripts
