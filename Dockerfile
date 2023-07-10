@@ -22,6 +22,9 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 ENV COMPOSER_MEMORY_LIMIT=-1 \
     COMPOSER_ALLOW_SUPERUSER=1
 
+# Update PHP version requirement in composer.json
+RUN sed -i 's/"php": "^7.2.5"/"php": "^8.0"/' composer.json
+
 # Install project dependencies
 RUN composer install --no-interaction --no-plugins --no-scripts
 
